@@ -5,8 +5,18 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Inventory {
+
+            private static final int SLOT_LOCATION = 0;
+            private static final int PRODUCT_NAME = 1;
+            private static final int PRICE = 2;
+            private static final int PRODUCT_TYPE = 3;
+
+
+            public List<String[]> inventoryInput(){
+            List<String[]> inventoryList = new ArrayList<>();
 
             File vmFile = new File("vendingmachine.csv");
             try(Scanner fileImport = new Scanner(vmFile.getAbsolutePath())){
@@ -17,48 +27,36 @@ public class Inventory {
                 }
                 while(fileImport.hasNextLine()){
                     String itemLineInfo = fileImport.nextLine();
-                    String[] Items = itemLineInfo.split("|");
+                    String[] items = itemLineInfo.split("\\|");
+                    inventoryList.add(items);
                 }
 
-                for()
+            } catch(Exception e) {
+            System.out.println(e.getMessage());
+                }
+            return inventoryList;
+            }
 
-            } catch(FileNotFoundException) {
-            System.out.println("File not found");
+            // need map of items tree map?
+            //
+            public TreeMap<String, Item> getInventoryKey() {
+                TreeMap<String, Item> inventoryKey = new TreeMap<>();
+                List<String[]> inventoryList = inventoryInput();
+                for(String[] currentItem : inventoryList){
+                  Integer priceConverter = Integer.parseInt(currentItem[PRICE]);
+                   Item item = new Item(currentItem[SLOT_LOCATION],currentItem[PRODUCT_NAME],priceConverter,currentItem[PRODUCT_TYPE]);
+                   inventoryKey.put(currentItem[SLOT_LOCATION],item);
+                }
+                return inventoryKey;
             }
 
 
-//        catch(FileNotFoundException fnfE){
-//        System.out.println("The file could not be read");
-//        }
 
 
 
 
-    ItemSlot A1 = new ItemSlot("A1");
-    ItemSlot A2 = new ItemSlot("A2");
-    ItemSlot A3 = new ItemSlot("A3");
-    ItemSlot A4 = new ItemSlot("A4");
-    ItemSlot B1 = new ItemSlot("B1");
-    ItemSlot B2 = new ItemSlot("B2");
-    ItemSlot B3 = new ItemSlot("B3");
-    ItemSlot B4 = new ItemSlot("B4");
-    ItemSlot C1 = new ItemSlot("C1");
-    ItemSlot C2 = new ItemSlot("C2");
-    ItemSlot C3 = new ItemSlot("C3");
-    ItemSlot C4 = new ItemSlot("C4");
-    ItemSlot D1 = new ItemSlot("D1");
-    ItemSlot D2 = new ItemSlot("D2");
-    ItemSlot D3 = new ItemSlot("D3");
-    ItemSlot D4 = new ItemSlot("D4");
-
-    List<ItemSlot> vmSlots = new ArrayList<>();
 
 
 
 
-    public void getInventory(){
-        for(ItemSlot currentSlot: vmSlots){
-            System.out.println("There are " + currentSlot.getNumberOfItems() + " " + currentSlot.getProductName());
-        }
-    }
 }

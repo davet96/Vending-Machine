@@ -6,6 +6,7 @@ public class Item {
     private String productType;
     private String slotLocation;
     private int price;
+    private int count;
 
     public String getProductName() {
         return productName;
@@ -24,18 +25,21 @@ public class Item {
     }
 
     public Item(){
+
         this.productName = "default";
         this.productType = "default";
-        this.slotLocation = "default";
         this.price = 0;
+        this.slotLocation = "default";
+
     }
 
 
-    public Item(String productName, String productType, String slotLocation, int price) {
+    public Item( String slotLocation,String productName, int price, String productType) {
         this.productName = productName;
         this.productType = productType;
         this.slotLocation = slotLocation;
         this.price = price;
+        this.count = 5;
     }
 
     public void printItemTypeMessage(){
