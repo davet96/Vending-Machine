@@ -18,6 +18,14 @@ public class ItemSlot extends Item{
         return slotContents.size();
     }
 
+    public ItemSlot(String slotNumber) {
+        this.slotNumber = slotNumber;
+    }
+
+    public ItemSlot(String productName, String productType, String slotLocation, int price) {
+        super(productName, productType, slotLocation, price);
+    }
+
     Item potatoCrisps = new Item("Potato Crisps", "Chip", "A1", 305);
     Item stackers = new Item("Stackers", "Chip", "A2", 145);
     Item grainWaves = new Item("Grain Waves", "Chip","A3", 275);
@@ -34,14 +42,6 @@ public class ItemSlot extends Item{
     Item littleLeagueChew = new Item("Little League Chew", "Gum", "D2", 95);
     Item chiclets = new Item("Chiclets", "Gum", "D3", 75);
     Item triplemint = new Item("Triplemint", "Gum", "D4", 75);
-
-    public ItemSlot(String slotNumber) {
-        this.slotNumber = slotNumber;
-    }
-
-    public ItemSlot(String productName, String productType, String slotLocation, int price) {
-        super(productName, productType, slotLocation, price);
-    }
 
     List<Item> itemReference = new ArrayList<>();{
         itemReference.add(potatoCrisps);
@@ -62,10 +62,17 @@ public class ItemSlot extends Item{
         itemReference.add(triplemint);
     }
 
-    public void refillSlot(String slotNumber, String productName){
-        for (int i = getNumberOfItems(); i < 5 ; i++) {
-           this.getProductName();
-            slotContents.add(this);
+    public void removeFromSlot(){
+        slotContents.remove(0);
+    }
+
+    public void fillSlot(){
+        for(Item currentItem: itemReference){
+            slotContents.add(currentItem);
+            slotContents.add(currentItem);
+            slotContents.add(currentItem);
+            slotContents.add(currentItem);
+            slotContents.add(currentItem);
         }
     }
 
