@@ -32,12 +32,13 @@ public class VendingMachineCLI {
 	Inventory vmInventory = new Inventory();
 
 	public void run() {
+		vmInventory.inventoryInput();
 		while (true) {
 			String userChoice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (userChoice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				// display vending machine items
-
+				vmInventory.listItems();
 			} else if (userChoice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				activeMenu = PURCHASE_MENU_OPTIONS;
 				// do purchase
