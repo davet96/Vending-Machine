@@ -24,6 +24,10 @@ public class Item {
         return price;
     }
 
+    public int getCount(){
+        return count;
+    }
+
     public Item(){
 
         this.productName = "default";

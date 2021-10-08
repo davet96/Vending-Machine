@@ -46,8 +46,9 @@ public class Inventory {
                 TreeMap<String, Item> inventoryKey = new TreeMap<>();
                 List<String[]> inventoryList = inventoryInput();
                 for(String[] currentItem : inventoryList){
-                  int priceConverter = Integer.parseInt(currentItem[PRICE]);
-                   Item item = new Item(currentItem[SLOT_LOCATION],currentItem[PRODUCT_NAME], priceConverter,currentItem[PRODUCT_TYPE]);
+                  double priceConverter = Double.parseDouble(currentItem[PRICE]);
+                  int priceAsInt = (int) priceConverter * 100;
+                   Item item = new Item(currentItem[SLOT_LOCATION],currentItem[PRODUCT_NAME], priceAsInt,currentItem[PRODUCT_TYPE]);
                    inventoryKey.put(currentItem[SLOT_LOCATION],item);
                 }
                 return inventoryKey;
