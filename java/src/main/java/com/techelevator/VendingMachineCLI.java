@@ -35,7 +35,7 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	String[] activeMenu;
+
 
 	Inventory vmInventory = new Inventory();
 
@@ -49,19 +49,27 @@ public class VendingMachineCLI {
 				vmInventory.listItems();
 
 			} else if (userChoice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-				activeMenu = PURCHASE_MENU_OPTIONS;
-				String purchaseSelected = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
+				String purchaseSelected = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+				boolean isInPurchaseMenu = true;
+			while(isInPurchaseMenu){
+				if(purchaseSelected.equals(PURCHASE_MENU_OPTION_DEPOSIT_MONEY)){
+					getDepositTotal();
+					System.out.println("You entered: " + getDepositTotal());
+				}else if (purchaseSelected.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)){
+
+				}else if(purchaseSelected.equals(PURCHASE_MENU_OPTION_END_TRANSACTION)){
+
+				}else {
+					isInPurchaseMenu = false;
+				}
+			}
 
 				// do purchase
-			}else if(userChoice.equals(PURCHASE_MENU_OPTION_DEPOSIT_MONEY)){
-				activeMenu = DEPOSIT_MENU_OPTIONS;
-				String depositMoneySelected = (String) menu.getChoiceFromOptions(DEPOSIT_MENU_OPTIONS);
-
-			} else if (userChoice.equals(MAIN_MENU_OPTION_EXIT)) {
+			}else if (userChoice.equals(MAIN_MENU_OPTION_EXIT)) {
 				//exit the program
 			} else if (userChoice.equals(PURCHASE_MENU_OPTION_RETURN_TO_MAIN)) {
-				activeMenu = MAIN_MENU_OPTIONS;
+
 			}
 		}
 	}
@@ -70,5 +78,20 @@ public class VendingMachineCLI {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();
+	}
+
+	public int getDepositTotal(){
+		System.out.println("Please select options 1, 2, 5, 10");
+		String depositMoneySelected = (String) menu.getChoiceFromOptions(DEPOSIT_MENU_OPTIONS);
+		if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_ONE)){
+			return 100;
+		}else if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_TWO)){
+			return 200;
+		}else if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_FIVE)){
+			return 500;
+		}else if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_TEN)){
+			return 1000;
+		}
+		return 0;
 	}
 }
