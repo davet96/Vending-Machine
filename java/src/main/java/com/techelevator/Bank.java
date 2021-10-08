@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class Currency {
+public class Bank {
 
     private static final int ONE_DOLLAR = 100;
     private static final int TWO_DOLLARS = 200;

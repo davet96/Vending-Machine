@@ -5,10 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Inventory {
 
@@ -16,6 +13,8 @@ public class Inventory {
             private static final int PRODUCT_NAME = 1;
             private static final int PRICE = 2;
             private static final int PRODUCT_TYPE = 3;
+
+            public Inventory(){}
 
 
             public List<String[]> inventoryInput(){
@@ -55,8 +54,8 @@ public class Inventory {
             }
 
             public void listItems(){
-                for(int i = 0; i < getInventoryKey().size(); i++){
-                    System.out.println(getInventoryKey().entrySet());
+                for(Map.Entry<String,Item> currentEntry :getInventoryKey().entrySet()){
+                    System.out.println(currentEntry.getKey() + " " + currentEntry.getValue().getProductName() + " " + currentEntry.getValue().getPrice() + " " + currentEntry.getValue().getCount() + " in stock" );
                 }
             }
 

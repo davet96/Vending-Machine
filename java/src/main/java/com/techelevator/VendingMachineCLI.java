@@ -8,7 +8,11 @@ public class VendingMachineCLI {
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
 
+	private static final String DISPLAY_MENU_OPTION_RETURN_TO_MAIN = "Return to main menu";
+
+
 	private static final String PURCHASE_MENU_OPTION_DEPOSIT_MONEY = "Add money";
+	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
 	private static final String PURCHASE_MENU_OPTION_END_TRANSACTION = "End transaction";
 	private static final String PURCHASE_MENU_OPTION_RETURN_TO_MAIN = "Main menu";
 
@@ -17,9 +21,13 @@ public class VendingMachineCLI {
 	private static final String DEPOSIT_MENU_OPTION_FIVE = "$5";
 	private static final String DEPOSIT_MENU_OPTION_TEN = "$10";
 
+
+
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT };
-	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_OPTION_DEPOSIT_MONEY, PURCHASE_MENU_OPTION_END_TRANSACTION, PURCHASE_MENU_OPTION_RETURN_TO_MAIN};
+	private static final String[] DISPLAY_MENU_OPTIONS = {DISPLAY_MENU_OPTION_RETURN_TO_MAIN};
+	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_OPTION_DEPOSIT_MONEY,PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_END_TRANSACTION, PURCHASE_MENU_OPTION_RETURN_TO_MAIN};
 	private static final String[] DEPOSIT_MENU_OPTIONS = {DEPOSIT_MENU_OPTION_ONE, DEPOSIT_MENU_OPTION_TWO, DEPOSIT_MENU_OPTION_FIVE, DEPOSIT_MENU_OPTION_TEN};
+
 
 	private Menu menu;
 
@@ -27,7 +35,7 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	String[] activeMenu = MAIN_MENU_OPTIONS;
+	String[] activeMenu;
 
 	Inventory vmInventory = new Inventory();
 
@@ -39,9 +47,17 @@ public class VendingMachineCLI {
 			if (userChoice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				// display vending machine items
 				vmInventory.listItems();
+
 			} else if (userChoice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				activeMenu = PURCHASE_MENU_OPTIONS;
+				String purchaseSelected = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+
+
 				// do purchase
+			}else if(userChoice.equals(PURCHASE_MENU_OPTION_DEPOSIT_MONEY)){
+				activeMenu = DEPOSIT_MENU_OPTIONS;
+				String depositMoneySelected = (String) menu.getChoiceFromOptions(DEPOSIT_MENU_OPTIONS);
+
 			} else if (userChoice.equals(MAIN_MENU_OPTION_EXIT)) {
 				//exit the program
 			} else if (userChoice.equals(PURCHASE_MENU_OPTION_RETURN_TO_MAIN)) {
