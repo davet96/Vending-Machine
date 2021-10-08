@@ -38,7 +38,7 @@ public class Item {
     }
 
 
-    public Item( String slotLocation,String productName, int price, String productType) {
+    public Item( String slotLocation, String productName, int price, String productType) {
         this.productName = productName;
         this.productType = productType;
         this.slotLocation = slotLocation;

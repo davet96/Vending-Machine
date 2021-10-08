@@ -45,17 +45,25 @@ public class Inventory {
                 TreeMap<String, Item> inventoryKey = new TreeMap<>();
                 List<String[]> inventoryList = inventoryInput();
                 for(String[] currentItem : inventoryList){
-                  double priceConverter = Double.parseDouble(currentItem[PRICE]);
-                  int priceAsInt = (int) priceConverter * 100;
-                   Item item = new Item(currentItem[SLOT_LOCATION],currentItem[PRODUCT_NAME], priceAsInt,currentItem[PRODUCT_TYPE]);
-                   inventoryKey.put(currentItem[SLOT_LOCATION],item);
+                  String withoutDecimal = currentItem[PRICE].replace(".", "");
+                  //BigDecimal priceConverter = new BigDecimal(currentItem[PRICE]);
+                  int priceAsInt = Integer.parseInt(withoutDecimal);
+                   Item item = new Item(currentItem[SLOT_LOCATION],currentItem[PRODUCT_NAME], priceAsInt, currentItem[PRODUCT_TYPE]);
+                   inventoryKey.put(currentItem[SLOT_LOCATION], item);
                 }
                 return inventoryKey;
             }
 
             public void listItems(){
                 for(Map.Entry<String,Item> currentEntry :getInventoryKey().entrySet()){
-                    System.out.println(currentEntry.getKey() + " " + currentEntry.getValue().getProductName() + " " + currentEntry.getValue().getPrice() + " " + currentEntry.getValue().getCount() + " in stock" );
+                    String priceAsString = String.valueOf(currentEntry.getValue().getPrice());
+                    String afterDecimal = priceAsString.substring(priceAsString.length()-2);
+                    String beforeDecimal = priceAsString.substring(0, priceAsString.length()-2);
+                    if(priceAsString.length() <= 2){
+                        beforeDecimal = "0";
+                    }
+                    String formattedString = "$" + beforeDecimal + "." + afterDecimal;
+                    System.out.println(currentEntry.getKey() + " " + currentEntry.getValue().getProductName() + " " + formattedString + " " + currentEntry.getValue().getCount() + " in stock" );
                 }
             }
 
