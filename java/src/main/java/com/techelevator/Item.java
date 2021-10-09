@@ -38,7 +38,7 @@ public class Item {
     }
 
 
-    public Item( String slotLocation, String productName, int price, String productType) {
+    public Item( String slotLocation, String productName, int price, String productType) {  // constructor for Item
         this.productName = productName;
         this.productType = productType;
         this.slotLocation = slotLocation;
@@ -56,6 +56,9 @@ public class Item {
         } else {
             System.out.println("Chew Chew, Yum!");
         }
+    }
+    public void itemCountDecrease(){
+        count -= 1;
     }
 
 }

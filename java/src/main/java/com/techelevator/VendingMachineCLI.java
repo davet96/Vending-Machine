@@ -2,6 +2,8 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
+import java.util.TreeMap;
+
 public class VendingMachineCLI {
 
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
@@ -52,9 +54,14 @@ public class VendingMachineCLI {
 			while(isInPurchaseMenu){
 				String purchaseSelected = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 				if(purchaseSelected.equals(PURCHASE_MENU_OPTION_DEPOSIT_MONEY)){
-					int currentDeposit = vendoMatic800.getDepositTotal();
-					System.out.println("You have deposited: " + currentDeposit);
+					int currentDeposit = getDepositTotal();
+					System.out.println("You have deposited: $" + (currentDeposit / 100));
 				}else if (purchaseSelected.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)){
+	//				vmInventory.listItems();
+
+					selectProduct(vmInventory.getInventoryKey());
+
+				String itemChoice = selectProduct(vmInventory.getInventoryKey()); // result of select product
 
 				}else if(purchaseSelected.equals(PURCHASE_MENU_OPTION_END_TRANSACTION)){
 
@@ -76,5 +83,29 @@ public class VendingMachineCLI {
 		cli.run();
 	}
 
+	public int getDepositTotal(){
+		System.out.println("Please select options 1, 2, 5, 10");
+		String depositMoneySelected = (String) menu.getChoiceFromOptions(DEPOSIT_MENU_OPTIONS);
+		if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_ONE)){
+			return 100;
+		}else if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_TWO)){
+			return 200;
+		}else if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_FIVE)){
+			return 500;
+		}else if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_TEN)){
+			return 1000;
+		}
+		return 0;
+	}
+
+	public String selectProduct(TreeMap<String, Item> inventoryKey) {  // feed money , select product, give change
+		String[] productOptions = inventoryKey.keySet().toArray(new String[inventoryKey.size()]); // a1 item, a2 item making it same size of inventory key as a string array
+		System.out.println("Please select the product you would like to purchase using the slot number: ");
+		String userChoice = (String) menu.getChoiceFromOptions(productOptions);
+
+		return userChoice;
+	}
 
 }
+// add display of how much change is left before exiting program
+// add product name when item is selected

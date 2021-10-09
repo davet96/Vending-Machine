@@ -24,4 +24,28 @@ public class Bank {
         return QUARTER;
     }
 
+
+
+
+    public int addMoney(int currentDeposit){
+        return currentDeposit;
+    }
+
+    public int makeChange(int currentBalance, int itemChoicePrice){
+       int changeDue = currentBalance - itemChoicePrice;
+       int numberOfQuarters;
+       int numberOfDimes;
+       int numberOfNickels;
+
+       numberOfQuarters = Math.round(changeDue / 25);
+       changeDue = changeDue % 25;
+       numberOfDimes = Math.round(changeDue / 10);
+       changeDue = changeDue % 10;
+       numberOfNickels = Math.round(changeDue / 5);
+       changeDue = changeDue % 5;
+
+        System.out.println("Please enjoy your " + numberOfQuarters + " Quarters, " + numberOfDimes + " Dimes, and " + numberOfNickels + " Nickels!");
+
+      return changeDue;
+    }
 }
