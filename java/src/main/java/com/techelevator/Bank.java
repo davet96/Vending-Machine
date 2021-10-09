@@ -6,7 +6,10 @@ public class Bank {
     private static final int DIME = 10;
     private static final int QUARTER = 25;
 
+
     private int currentBalance = 0;
+    Inventory vmInventory = new Inventory();
+
 
     public int getCurrentBalance() {
         return currentBalance;
@@ -37,6 +40,7 @@ public class Bank {
        int numberOfDimes;
        int numberOfNickels;
 
+
        numberOfQuarters = Math.round(changeDue / 25);
        changeDue = changeDue % 25;
        numberOfDimes = Math.round(changeDue / 10);
@@ -48,4 +52,16 @@ public class Bank {
 
       return changeDue;
     }
+
+    public int getItemChoicePrice(String itemChoice) {
+        int productCost;
+        if (vmInventory.getInventoryKey().containsKey(itemChoice)) {
+             productCost = vmInventory.getInventoryKey().get(itemChoice).getPrice(); //how to access price from TreeMap
+            return productCost ;
+        }
+        return 0;
+    }
+
+
+
 }

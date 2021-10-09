@@ -46,7 +46,6 @@ public class Inventory {
                 List<String[]> inventoryList = inventoryInput();
                 for(String[] currentItem : inventoryList){
                   String withoutDecimal = currentItem[PRICE].replace(".", "");
-                  //BigDecimal priceConverter = new BigDecimal(currentItem[PRICE]);
                   int priceAsInt = Integer.parseInt(withoutDecimal);
                    Item item = new Item(currentItem[SLOT_LOCATION],currentItem[PRODUCT_NAME], priceAsInt, currentItem[PRODUCT_TYPE]);
                    inventoryKey.put(currentItem[SLOT_LOCATION], item);

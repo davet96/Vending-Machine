@@ -38,6 +38,7 @@ public class VendingMachineCLI {
 
 	Inventory vmInventory = new Inventory();
 	VendingMachine vendoMatic800 = new VendingMachine();
+	Bank vmBank = new Bank();
 
 	public void run() {
 		vmInventory.inventoryInput();
@@ -53,6 +54,15 @@ public class VendingMachineCLI {
 
 			while(isInPurchaseMenu){
 				String purchaseSelected = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+
+//				String code = listOfItems.get(i).getCode();
+//				String name = listOfItems.get(i).getName();
+//				String price = Double.toString(listOfItems.get(i).getPrice());
+//				String type = listOfItems.get(i).getType();
+
+
+
+
 				if(purchaseSelected.equals(PURCHASE_MENU_OPTION_DEPOSIT_MONEY)){
 					int currentDeposit = getDepositTotal();
 					System.out.println("You have deposited: $" + (currentDeposit / 100));
@@ -61,7 +71,10 @@ public class VendingMachineCLI {
 
 					selectProduct(vmInventory.getInventoryKey());
 
+
+
 				String itemChoice = selectProduct(vmInventory.getInventoryKey()); // result of select product
+					vendoMatic800.productSelection(itemChoice);
 
 				}else if(purchaseSelected.equals(PURCHASE_MENU_OPTION_END_TRANSACTION)){
 
@@ -84,7 +97,7 @@ public class VendingMachineCLI {
 	}
 
 	public int getDepositTotal(){
-		System.out.println("Please select options 1, 2, 5, 10");
+		System.out.println("Please select options $1, $2, $5, $10");
 		String depositMoneySelected = (String) menu.getChoiceFromOptions(DEPOSIT_MENU_OPTIONS);
 		if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_ONE)){
 			return 100;

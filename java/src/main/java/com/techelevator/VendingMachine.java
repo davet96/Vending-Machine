@@ -33,13 +33,19 @@ public class VendingMachine{
 
     }
     public void productSelection(String itemChoice){
-
+        item = inventory.getInventoryKey().get(itemChoice);
+        if(inventory.getInventoryKey().containsKey(itemChoice)){
+            System.out.println("You have selected: " + itemChoice);
+            System.out.println(item.printItemTypeMessage());
+        }
     }
 
-//    if(vmInventory.getInventoryKey().containsKey(userChoice)){
-//        int productCost = vmInventory.getInventoryKey().get(userChoice).getPrice(); //how to access price from TreeMap
+    public void executeTransaction(String itemChoice){
+        System.out.println("You have selected: " + itemChoice + ", which cost " + bank.getItemChoicePrice(itemChoice));
 
-//    }
+        bank.makeChange(bank.getCurrentBalance(), bank.getItemChoicePrice(itemChoice));
+    }
+
 
 
 
