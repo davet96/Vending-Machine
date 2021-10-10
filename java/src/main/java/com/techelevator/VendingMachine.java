@@ -51,7 +51,7 @@ public class VendingMachine{
 
         if(inventory.getInventoryKey().containsKey(itemChoice)){
             item = inventory.getInventoryKey().get(itemChoice);
-            System.out.println("You have purchased: " + itemChoice + " " + item.getProductName() + ", which costs " + formatMoneyForInternalUse(itemChoice));
+            System.out.println("You have selected: " + itemChoice + " " + item.getProductName() + ", which costs " + formatMoneyForInternalUse(itemChoice));
             if(item.getCount() == 0){
                 System.out.println("Sorry, this item is sold out :(");
 
