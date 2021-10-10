@@ -30,12 +30,18 @@ public class Bank {
 
 
 
-    public int addMoney(int currentDeposit){
-        return currentDeposit;
+    public int addMoneyToCurrentBalance(int currentDeposit){
+        currentBalance += currentDeposit;
+        return currentBalance;
     }
 
-    public int makeChange(int currentBalance, int itemChoicePrice){
-       int changeDue = currentBalance - itemChoicePrice;
+    public int subtractMoneyFromCurrentBalance(int itemChoicePrice){
+        currentBalance -= itemChoicePrice;
+        return currentBalance;
+    }
+
+    public int makeChange(){
+       int changeDue = currentBalance;
        int numberOfQuarters;
        int numberOfDimes;
        int numberOfNickels;
@@ -50,7 +56,7 @@ public class Bank {
 
         System.out.println("Please enjoy your " + numberOfQuarters + " Quarters, " + numberOfDimes + " Dimes, and " + numberOfNickels + " Nickels!");
 
-      return changeDue;
+      return currentBalance = 0;
     }
 
     public int getItemChoicePrice(String itemChoice) {

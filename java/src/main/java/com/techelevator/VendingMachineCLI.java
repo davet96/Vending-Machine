@@ -38,11 +38,11 @@ public class VendingMachineCLI {
 
 	Inventory vmInventory = new Inventory();
 	VendingMachine vendoMatic800 = new VendingMachine();
-	Bank vmBank = new Bank();
 
 	public void run() {
 		vmInventory.inventoryInput();
-		while (true) {
+		boolean isInMainMenu = true;
+		while (isInMainMenu) {
 			String userChoice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (userChoice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
@@ -55,35 +55,30 @@ public class VendingMachineCLI {
 			while(isInPurchaseMenu){
 				String purchaseSelected = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
-//				String code = listOfItems.get(i).getCode();
-//				String name = listOfItems.get(i).getName();
-//				String price = Double.toString(listOfItems.get(i).getPrice());
-//				String type = listOfItems.get(i).getType();
-
 
 
 
 				if(purchaseSelected.equals(PURCHASE_MENU_OPTION_DEPOSIT_MONEY)){
 					int currentDeposit = getDepositTotal();
 					System.out.println("You have deposited: $" + (currentDeposit / 100));
+					vendoMatic800.userBalance(currentDeposit);
+
 				}else if (purchaseSelected.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)){
-	//				vmInventory.listItems();
+					String itemChoice = selectProduct(vmInventory.getInventoryKey());
 
-					selectProduct(vmInventory.getInventoryKey());
-
-
-
-				String itemChoice = selectProduct(vmInventory.getInventoryKey()); // result of select product
 					vendoMatic800.productSelection(itemChoice);
+					vendoMatic800.executeTransaction(itemChoice);
 
 				}else if(purchaseSelected.equals(PURCHASE_MENU_OPTION_END_TRANSACTION)){
-
-				}else {
+					//makeChange should go here
+					vendoMatic800.getChangeAmount();
 					isInPurchaseMenu = false;
 				}
 			}
 			} else if (userChoice.equals(MAIN_MENU_OPTION_EXIT)) {
 				//exit the program
+				System.out.println("Thank you for choosing the Vendo-Matic 800 for your snacking needs!");
+				isInMainMenu = false;
 			} else if (userChoice.equals(PURCHASE_MENU_OPTION_RETURN_TO_MAIN)) {
 
 			}

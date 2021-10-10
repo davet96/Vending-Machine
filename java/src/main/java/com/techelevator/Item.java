@@ -46,17 +46,7 @@ public class Item {
         this.count = 5;
     }
 
-    public String printItemTypeMessage(){
-        if(getProductType().equals("Chip")){
-            System.out.println("Crunch Crunch, Yum!");
-        } else if(getProductType().equals("Candy")){
-            System.out.println("Munch Munch, Yum!");
-        } else if(getProductType().equals("Drink")){
-            System.out.println("Glug Glug, Yum!");
-        } else {
-            System.out.println("Chew Chew, Yum!");
-        } return printItemTypeMessage();
-    }
+
     public void itemCountDecrease(){
         count -= 1;
     }

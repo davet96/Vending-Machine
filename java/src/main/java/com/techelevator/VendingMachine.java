@@ -3,13 +3,14 @@ package com.techelevator;
 import com.techelevator.view.Menu;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class VendingMachine{
 
 
-    Inventory inventory;
-    Bank bank;
-    Item item;
+    Inventory inventory = new Inventory();
+    Bank bank = new Bank();
+    Item item = new Item();
 
     public Inventory getInventory() {
         return inventory;
@@ -29,6 +30,7 @@ public class VendingMachine{
         item = inventory.getInventoryKey().get(itemChoice);
         if(inventory.getInventoryKey().containsKey(itemChoice)){
             item.itemCountDecrease();
+            printItemTypeMessage();
         }
 
     }
@@ -36,16 +38,68 @@ public class VendingMachine{
         item = inventory.getInventoryKey().get(itemChoice);
         if(inventory.getInventoryKey().containsKey(itemChoice)){
             System.out.println("You have selected: " + itemChoice);
-            System.out.println(item.printItemTypeMessage());
         }
     }
 
-    public void executeTransaction(String itemChoice){
-        System.out.println("You have selected: " + itemChoice + ", which cost " + bank.getItemChoicePrice(itemChoice));
-
-        bank.makeChange(bank.getCurrentBalance(), bank.getItemChoicePrice(itemChoice));
+    public void printItemTypeMessage(){
+        if(item.getProductType().equals("Chip")){
+            System.out.println("Crunch Crunch, Yum!");
+        } else if(item.getProductType().equals("Candy")){
+            System.out.println("Munch Munch, Yum!");
+        } else if(item.getProductType().equals("Drink")){
+            System.out.println("Glug Glug, Yum!");
+        } else {
+            System.out.println("Chew Chew, Yum!");
+        }
     }
 
+    public String formatMoney(String itemChoice){
+        String formattedString = "";
+        if(inventory.getInventoryKey().containsKey(itemChoice)) {
+            String priceAsString = String.valueOf(inventory.getInventoryKey().get(itemChoice).getPrice());
+            String afterDecimal = priceAsString.substring(priceAsString.length() - 2);
+            String beforeDecimal = priceAsString.substring(0, priceAsString.length() - 2);
+            if (priceAsString.length() <= 2) {
+                beforeDecimal = "0";
+            }
+            formattedString = "$" + beforeDecimal + "." + afterDecimal;
+        } return formattedString;
+    }
+
+    public void executeTransaction(String itemChoice){
+        //Print out users choice, use printf()?
+        //This method runs the entire transaction process
+        if(inventory.getInventoryKey().containsKey(itemChoice)){
+            System.out.println("You have selected: " + itemChoice + ", which costs $" + formatMoney(itemChoice));
+            if(item.getCount() == 0){
+                System.out.println("Sorry, this item is sold out :(");
+
+            } else {
+                if(bank.getCurrentBalance() > item.getPrice()){
+                    dispenseItem(itemChoice);
+                    bank.subtractMoneyFromCurrentBalance(item.getPrice());
+                    String itemPrice = String.valueOf(item.getPrice());
+                    System.out.println(item.getProductName() + " " + formatMoney(itemPrice) + "\nYour current balance is: $" + bank.getCurrentBalance());
+                } else {
+                    System.out.println("Please add money to your current balance to purchase this item");
+                }
+            }
+
+
+        } else{
+            System.out.println("The item that you selected does not exist in the Vendo-Matic 800");
+        }
+
+    }
+
+    public void getChangeAmount(){
+        bank.makeChange();
+    }
+
+    public void userBalance(int currentDeposit){
+        bank.addMoneyToCurrentBalance(currentDeposit);
+        System.out.println("Your balance is: $" + (bank.getCurrentBalance() / 100));
+    }
 
 
 

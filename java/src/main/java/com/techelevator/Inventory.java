@@ -66,7 +66,6 @@ public class Inventory {
                 }
             }
 
-
             public PrintWriter logWriter(){
                 String fileDestination = "log.txt";
                 File logDestination = new File(fileDestination);
