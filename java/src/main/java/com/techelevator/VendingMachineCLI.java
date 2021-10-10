@@ -17,10 +17,10 @@ public class VendingMachineCLI {
 	private static final String PURCHASE_MENU_OPTION_END_TRANSACTION = "End transaction";
 	private static final String PURCHASE_MENU_OPTION_RETURN_TO_MAIN = "Main menu";
 
-	private static final String DEPOSIT_MENU_OPTION_ONE = "$1";
-	private static final String DEPOSIT_MENU_OPTION_TWO = "$2";
-	private static final String DEPOSIT_MENU_OPTION_FIVE = "$5";
-	private static final String DEPOSIT_MENU_OPTION_TEN = "$10";
+	private static final String DEPOSIT_MENU_OPTION_ONE = "$1.00";
+	private static final String DEPOSIT_MENU_OPTION_TWO = "$2.00";
+	private static final String DEPOSIT_MENU_OPTION_FIVE = "$5.00";
+	private static final String DEPOSIT_MENU_OPTION_TEN = "$10.00";
 
 
 
@@ -60,21 +60,18 @@ public class VendingMachineCLI {
 
 				if(purchaseSelected.equals(PURCHASE_MENU_OPTION_DEPOSIT_MONEY)){
 					int currentDeposit = getDepositTotal();
-					System.out.println("You have deposited: $" + (currentDeposit / 100));
+					System.out.println("You have deposited: $" + (currentDeposit / 100) + ".00");
 					vendoMatic800.userBalance(currentDeposit);
-					vendoMatic800.logAddMoney(currentDeposit);
 
-				}else if (purchaseSelected.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)){
+				} else if (purchaseSelected.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)){
 					String itemChoice = selectProduct(vmInventory.getInventoryKey());
 
-					vendoMatic800.productSelection(itemChoice);
 					vendoMatic800.executeTransaction(itemChoice);
-					vendoMatic800.logProductSelection(itemChoice, vendoMatic800.bank.getCurrentBalance());
 
-				}else if(purchaseSelected.equals(PURCHASE_MENU_OPTION_END_TRANSACTION)){
+				} else if(purchaseSelected.equals(PURCHASE_MENU_OPTION_END_TRANSACTION)){
 					//makeChange should go here
 					vendoMatic800.getChangeAmount();
-					vendoMatic800.logChangeGiven(vendoMatic800.bank.getCurrentBalance());
+
 					isInPurchaseMenu = false;
 				}
 			}
@@ -95,7 +92,7 @@ public class VendingMachineCLI {
 	}
 
 	public int getDepositTotal(){
-		System.out.println("Please select options $1, $2, $5, $10");
+		System.out.println("Please select options $1.00, $2.00, $5.00, $10.00");
 		String depositMoneySelected = (String) menu.getChoiceFromOptions(DEPOSIT_MENU_OPTIONS);
 		if(depositMoneySelected.equals(DEPOSIT_MENU_OPTION_ONE)){
 			return 100;

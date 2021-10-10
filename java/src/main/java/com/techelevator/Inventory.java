@@ -65,27 +65,4 @@ public class Inventory {
                     System.out.println(currentEntry.getKey() + " " + currentEntry.getValue().getProductName() + " " + formattedString + " " + currentEntry.getValue().getCount() + " in stock" );
                 }
             }
-
-            public PrintWriter logWriter(){
-                String fileDestination = "log.txt";
-                File logDestination = new File(fileDestination);
-                logDestination.getAbsolutePath();
-
-                try(PrintWriter logWriter = new PrintWriter(new FileOutputStream(logDestination, true))) {
-
-                } catch(FileNotFoundException fnfE){
-                    System.out.println(fnfE.getMessage());
-
-                } return logWriter();
-            }
-
-
-
-
-
-
-
-
-
-
 }

@@ -1,10 +1,5 @@
 package com.techelevator;
 
-import com.techelevator.view.Menu;
-
-import java.util.Map;
-import java.util.TreeMap;
-
 public class VendingMachine{
 
 
@@ -26,18 +21,17 @@ public class VendingMachine{
 
     public VendingMachine(){}
 
+    public void userBalance(int currentDeposit){
+        bank.addMoneyToCurrentBalance(currentDeposit);
+        System.out.println("Your balance is: " + formatMoneyOutput(bank.getCurrentBalance()));
+        logAddMoney(currentDeposit);
+    }
+
     public void dispenseItem(String itemChoice){
         item = inventory.getInventoryKey().get(itemChoice);
         if(inventory.getInventoryKey().containsKey(itemChoice)){
             item.itemCountDecrease();
             printItemTypeMessage();
-        }
-
-    }
-    public void productSelection(String itemChoice){
-        item = inventory.getInventoryKey().get(itemChoice);
-        if(inventory.getInventoryKey().containsKey(itemChoice)){
-            System.out.println("You have selected: " + itemChoice);
         }
     }
 
@@ -53,33 +47,22 @@ public class VendingMachine{
         }
     }
 
-    public String formatMoney(String itemChoice){
-        String formattedString = "";
-        if(inventory.getInventoryKey().containsKey(itemChoice)) {
-            String priceAsString = String.valueOf(inventory.getInventoryKey().get(itemChoice).getPrice());
-            String afterDecimal = priceAsString.substring(priceAsString.length() - 2);
-            String beforeDecimal = priceAsString.substring(0, priceAsString.length() - 2);
-            if (priceAsString.length() <= 2) {
-                beforeDecimal = "0";
-            }
-            formattedString = "$" + beforeDecimal + "." + afterDecimal;
-        } return formattedString;
-    }
-
     public void executeTransaction(String itemChoice){
-        //Print out users choice, use printf()?
-        //This method runs the entire transaction process
+
         if(inventory.getInventoryKey().containsKey(itemChoice)){
-            System.out.println("You have selected: " + itemChoice + ", which costs $" + formatMoney(itemChoice));
+            item = inventory.getInventoryKey().get(itemChoice);
+            System.out.println("You have purchased: " + itemChoice + " " + item.getProductName() + ", which costs " + formatMoneyForInternalUse(itemChoice));
             if(item.getCount() == 0){
                 System.out.println("Sorry, this item is sold out :(");
 
             } else {
                 if(bank.getCurrentBalance() > item.getPrice()){
+                    int originalBalance = bank.getCurrentBalance();
                     dispenseItem(itemChoice);
                     bank.subtractMoneyFromCurrentBalance(item.getPrice());
                     String itemPrice = String.valueOf(item.getPrice());
-                    System.out.println(item.getProductName() + " " + formatMoney(itemPrice) + "\nYour current balance is: $" + bank.getCurrentBalance());
+                    logProductSelection(itemChoice, originalBalance);
+                    System.out.println("\nYour current balance is: " + formatMoneyOutput(bank.getCurrentBalance()));
                 } else {
                     System.out.println("Please add money to your current balance to purchase this item");
                 }
@@ -93,41 +76,68 @@ public class VendingMachine{
     }
 
     public void getChangeAmount(){
+        int originalBalance = bank.getCurrentBalance();
         bank.makeChange();
+        logChangeGiven(originalBalance);
     }
 
-    public void userBalance(int currentDeposit){
-        bank.addMoneyToCurrentBalance(currentDeposit);
-        System.out.println("Your balance is: $" + (bank.getCurrentBalance() / 100));
+    public String formatMoneyForInternalUse(String itemChoice){
+        String formattedString = "";
+        if(inventory.getInventoryKey().containsKey(itemChoice)) {
+            String priceAsString = String.valueOf(inventory.getInventoryKey().get(itemChoice).getPrice());
+            String afterDecimal = priceAsString.substring(priceAsString.length() - 2);
+            String beforeDecimal = priceAsString.substring(0, priceAsString.length() - 2);
+            if (priceAsString.length() <= 2) {
+                beforeDecimal = "0";
+            }
+            formattedString = "$" + beforeDecimal + "." + afterDecimal;
+        } return formattedString;
+    }
+
+    public String formatMoneyOutput(int money){
+        String moneyAsString = String.valueOf(money);
+        if(moneyAsString.length() == 1){
+            return "$0.00";
+        }
+        if(moneyAsString.length() < 3){
+            return "$0." + moneyAsString;
+        }
+        if(moneyAsString.length() == 3){
+            String dollar = moneyAsString.substring(0, 1);
+            String cents = moneyAsString.substring(1, moneyAsString.length());
+            return "$" + dollar + "." + cents;
+        }
+        else {
+            String dollar = moneyAsString.substring(0,2);
+            String cents = moneyAsString.substring(2, moneyAsString.length());
+            return "$" + dollar + "." + cents;
+        }
     }
 
     public void logAddMoney(int currentDeposit){
         Logger depositLogger = new Logger();
-        if(bank.addMoneyToCurrentBalance(currentDeposit) > 0){
-            depositLogger.logFinancial(currentDeposit, bank.getCurrentBalance());
+        String message = "FEED MONEY: " + formatMoneyOutput(currentDeposit) + " " + formatMoneyOutput(bank.getCurrentBalance());
+        if(currentDeposit > 0){
+            depositLogger.writeToFile(message);
         }
 
     }
 
-    public void logProductSelection(String itemChoice, int currentBalance){
-        int newBalance = bank.getCurrentBalance() - bank.getItemChoicePrice(itemChoice);
+    public void logProductSelection(String itemChoice, int originalBalance){
+        String message = item.getProductName() + " " + item.getSlotLocation() + " " + formatMoneyOutput(originalBalance) + " " + formatMoneyOutput(bank.getCurrentBalance());
         Logger productLogger = new Logger();
         if(inventory.getInventoryKey().containsKey(itemChoice)){
-            productLogger.logProduct(item.getProductName(), item.getSlotLocation(), currentBalance, newBalance);
+            productLogger.writeToFile(message);
         }
 
     }
 
     public void logChangeGiven(int changeDue){
         Logger changeDueLogger = new Logger();
-        changeDue = bank.getCurrentBalance();
+        String message = "GIVE CHANGE: " + formatMoneyOutput(changeDue) + " " + formatMoneyOutput(bank.getCurrentBalance());
         if(changeDue > 0){
-            changeDueLogger.logFinancial(bank.getCurrentBalance(), 0);
+            changeDueLogger.writeToFile(message);
         }
     }
-
-
-
-
 
 }

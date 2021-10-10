@@ -13,51 +13,60 @@ import java.util.Date;
 
 public class Logger {
 
-
-        public void logFinancial(int currentDeposit, int currentBalance){
-
+    public void writeToFile(String message) {
         try {
 
             File transactionLog = new File("Log.txt");
             if (!transactionLog.exists()) {
                 transactionLog.createNewFile();
             }
-            PrintWriter logWriter = new PrintWriter(new FileOutputStream("log.txt", true));  // basic log method
-            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-            LocalDate today = LocalDate.now();
-            LocalDateTime time = LocalDateTime.now();
+            PrintWriter logWriter = new PrintWriter(new FileOutputStream("Log.txt", true));  // basic log method
 
-            logWriter.println(dateFormat.format(today) + " " + timeFormat.format(time) + " FEED MONEY: " + currentDeposit + " " + currentBalance);
+            logWriter.printf("\n%tm/%td/%tY %tI:%tM:%tS %s", LocalDate.now(), LocalDate.now(), LocalDate.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), message);
             logWriter.flush();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        }
 
-    public void logProduct(String productName, String slotLocation ,int currentBalance, int newBalance){
+//        public void logFinancial(int currentDeposit, int currentBalance){
+//
+//        try {
+//
+//            File transactionLog = new File("Log.txt");
+//            if (!transactionLog.exists()) {
+//                transactionLog.createNewFile();
+//            }
+//            PrintWriter logWriter = new PrintWriter(new FileOutputStream("log.txt", true));  // basic log method
+//
+//            logWriter.printf("\n%tm/%td/%tY %tI:%tM:%tS %s %o %o", LocalDate.now(), LocalDate.now(), LocalDate.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), "FEED MONEY:", currentDeposit, currentBalance);
+//
+//            logWriter.flush();
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        }
 
-        try {
-            File transactionLog = new File("Log.txt");
-            if (!transactionLog.exists()) {
-                transactionLog.createNewFile();
-            }
-            PrintWriter logWriter = new PrintWriter(new FileOutputStream("log.txt", true));  // basic log method
-            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-            LocalDate today = LocalDate.now();
-            LocalDateTime time = LocalDateTime.now();
-            logWriter.println(dateFormat.format(today) + " " + timeFormat.format(time) + productName + " " + slotLocation + " " + currentBalance + " " + newBalance);
-
-            logWriter.flush();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//    public void logProduct(String productName, String slotLocation ,int currentBalance, int newBalance){
+//
+//        try {
+//            File transactionLog = new File("Log.txt");
+//            if (!transactionLog.exists()) {
+//                transactionLog.createNewFile();
+//            }
+//            PrintWriter logWriter = new PrintWriter(new FileOutputStream("log.txt", true));  // basic log method
+//
+//            logWriter.printf("\n%tm/%td/%tY %tI:%tM:%tS %s %s %o %o", LocalDate.now(), LocalDate.now(), LocalDate.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
+//            logWriter.flush();
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     }
 }

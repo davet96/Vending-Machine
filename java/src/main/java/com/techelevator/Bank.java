@@ -8,7 +8,6 @@ public class Bank {
 
 
     private int currentBalance = 0;
-    Inventory vmInventory = new Inventory();
 
 
     public int getCurrentBalance() {
@@ -54,20 +53,9 @@ public class Bank {
        numberOfNickels = Math.round(changeDue / 5);
        changeDue = changeDue % 5;
 
-        System.out.println("Please enjoy your " + numberOfQuarters + " Quarters, " + numberOfDimes + " Dimes, and " + numberOfNickels + " Nickels!");
+        System.out.println("Don't spend all of your " + numberOfQuarters + " Quarters, " + numberOfDimes + " Dimes, and " + numberOfNickels + " Nickels in one place!");
 
       return currentBalance = 0;
     }
-
-    public int getItemChoicePrice(String itemChoice) {
-        int productCost;
-        if (vmInventory.getInventoryKey().containsKey(itemChoice)) {
-             productCost = vmInventory.getInventoryKey().get(itemChoice).getPrice(); //how to access price from TreeMap
-            return productCost ;
-        }
-        return 0;
-    }
-
-
 
 }
