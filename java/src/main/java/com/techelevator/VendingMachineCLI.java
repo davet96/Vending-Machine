@@ -62,16 +62,19 @@ public class VendingMachineCLI {
 					int currentDeposit = getDepositTotal();
 					System.out.println("You have deposited: $" + (currentDeposit / 100));
 					vendoMatic800.userBalance(currentDeposit);
+					vendoMatic800.logAddMoney(currentDeposit);
 
 				}else if (purchaseSelected.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)){
 					String itemChoice = selectProduct(vmInventory.getInventoryKey());
 
 					vendoMatic800.productSelection(itemChoice);
 					vendoMatic800.executeTransaction(itemChoice);
+					vendoMatic800.logProductSelection(itemChoice, vendoMatic800.bank.getCurrentBalance());
 
 				}else if(purchaseSelected.equals(PURCHASE_MENU_OPTION_END_TRANSACTION)){
 					//makeChange should go here
 					vendoMatic800.getChangeAmount();
+					vendoMatic800.logChangeGiven(vendoMatic800.bank.getCurrentBalance());
 					isInPurchaseMenu = false;
 				}
 			}

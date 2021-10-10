@@ -101,6 +101,33 @@ public class VendingMachine{
         System.out.println("Your balance is: $" + (bank.getCurrentBalance() / 100));
     }
 
+    public void logAddMoney(int currentDeposit){
+        Logger depositLogger = new Logger();
+        if(bank.addMoneyToCurrentBalance(currentDeposit) > 0){
+            depositLogger.logFinancial(currentDeposit, bank.getCurrentBalance());
+        }
+
+    }
+
+    public void logProductSelection(String itemChoice, int currentBalance){
+        int newBalance = bank.getCurrentBalance() - bank.getItemChoicePrice(itemChoice);
+        Logger productLogger = new Logger();
+        if(inventory.getInventoryKey().containsKey(itemChoice)){
+            productLogger.logProduct(item.getProductName(), item.getSlotLocation(), currentBalance, newBalance);
+        }
+
+    }
+
+    public void logChangeGiven(int changeDue){
+        Logger changeDueLogger = new Logger();
+        changeDue = bank.getCurrentBalance();
+        if(changeDue > 0){
+            changeDueLogger.logFinancial(bank.getCurrentBalance(), 0);
+        }
+    }
+
+
+
 
 
 }
